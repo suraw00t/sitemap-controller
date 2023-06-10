@@ -1,0 +1,1 @@
+SCHEDULE_TO_CHECK_SITEMAP = "0 0 * * *"
