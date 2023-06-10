@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "sitemap-controller"
+version = "0.1.0"
+description = ""
+authors = ["suraw00t <surawut.kong@gmail.com>"]
+readme = "README.md"
+packages = [{include = "sitemap_controller"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+sitemap-generator = {git = "https://github.com/Haikson/sitemap-generator.git"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
