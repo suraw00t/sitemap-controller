@@ -1,4 +1,4 @@
-class SitemapController():
+class SitemapController:
     settings = None
 
     def __init__(self, settings):
