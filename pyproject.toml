@@ -10,6 +10,8 @@ packages = [{include = "sitemap_controller"}]
 python = "^3.11"
 sitemap-generator = {git = "https://github.com/Haikson/sitemap-generator.git"}
 
+[tool.poetry.scripts]
+sitemap-controller = "sitemap_controller.cmd.controller:main"
 
 [build-system]
 requires = ["poetry-core"]
