@@ -1,6 +1,6 @@
 from abc import ABC, abstractclassmethod
 from typing import List
-from lxml import etree, cssselect, html
+from lxml import cssselect, html
 import re
 
 
