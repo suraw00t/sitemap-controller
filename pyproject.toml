@@ -8,7 +8,10 @@ packages = [{include = "sitemap_controller"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-sitemap-generator = {git = "https://github.com/Haikson/sitemap-generator.git"}
+aiohttp = "^3.8.4"
+aiofile = "^3.8.7"
+lxml = "^4.9.2"
+cssselect = "^1.2.0"
 
 [tool.poetry.scripts]
 sitemap-controller = "sitemap_controller.cmd.controller:main"
