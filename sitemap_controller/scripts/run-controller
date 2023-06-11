@@ -1,3 +1,0 @@
-#!/bin/sh
-
-SES_SCHOOL_SETTINGS=$(pwd)/sitemap_controller-production.cfg sitemap-controller

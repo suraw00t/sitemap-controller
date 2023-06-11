@@ -1,8 +1,9 @@
+import signal
 import asyncio
 import logging
-import json
 import datetime
-from . import sitemap_controller
+from .sitemap_controller import SitemapController
+from sitemap_controller.crawler import Crawler
 
 logger = logging.getLogger(__name__)
 
@@ -12,20 +13,24 @@ class ControllerServer:
         self.settings = settings
         self.running = False
 
-        self.sitemap = sitemap_controller.SitemapController(self.settings)
+        self.sitemap = SitemapController(self.settings)
 
-    async def check_evaluations_daily(self):
-        time_check = self.settings["SCHEDULE_TO_CHECK_SITEMAP"]
-        hour, minute = time_check.split(":")
-        process_time = datetime.time(int(hour), int(minute), 0)
+    async def controller_schedule(self):
+        logger.debug("start controller schedule")
+        time_check = self.settings.get("SCHEDULE_TO_CHECK_SITEMAP")
+        hours, minutes, dom, month, dow = time_check.split(" ")
+        process_time = datetime.time(int(hours), int(minutes), 0)
+        # ทำเวลาให้ใช้งานได้
+        await self.sitemap.generate_sitemap()
 
         while self.running:
-            logger.debug("start check evaluation data daily")
+            logger.debug("running schedule sitemap controller")
 
             date = datetime.date.today()
             time_set = datetime.datetime.combine(date, process_time)
             time_to_check = time_set - datetime.datetime.now()
             await asyncio.sleep(time_to_check.seconds)
+            await self.sitemap.generate_sitemap()
 
             await asyncio.sleep(10)
 
@@ -41,6 +46,7 @@ class ControllerServer:
         loop = asyncio.get_event_loop()
         loop.set_debug(True)
         loop.run_until_complete(self.set_up())
+        loop.create_task(self.controller_schedule())
 
         try:
             loop.run_forever()
