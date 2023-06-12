@@ -25,21 +25,18 @@ class ControllerServer:
         dow = int(dow) if dow != "*" else None
         year = today.year
 
-        if months == "*" and dom != "*" and day <= today.day:
+        time_today = today.time().replace(second=0, microsecond=0)
+        time = datetime.time(hours, minutes, 0, 0)
+        date = datetime.date(today.year, month if month != today.month else month, day)
+        current_datetime = datetime.datetime.combine(date, time)
+        if current_datetime < today and months != "*":
+            year = year + 1
+
+        if current_datetime < today and dom != "*":
             month = month + 1
 
-        if hours <= today.hour and minutes <= today.minute and dom == "*":
+        if time < time_today:
             day = day + 1
-
-        if (
-            month <= today.month
-            and day <= today.day
-            and hours <= today.hour
-            and minutes < today.minute
-        ):
-            year = year + 1
-        elif month < today.month and day <= today.day:
-            year = year + 1
 
         if dow is not None:
             print("days of week", dow)
