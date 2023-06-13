@@ -1,5 +1,4 @@
 import os
-import sys
 import logging
 from sitemap_controller.crawler import Crawler
 
@@ -15,9 +14,15 @@ class SitemapController:
     async def generate_sitemap(self):
         exclude_urls = self.settings.get("EXCLUDE_URLS")
         root_url = self.settings.get("URL")
-        out_file = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "../../", "sitemap.xml"
-        )
+        if os.environ.get("CONTROLLER_ENV") == "PRODUCTION":
+            if not os.path.exists("/deployment/sitemap_controller"):
+                os.makedirs("/deployment/sitemap_controller")
+            out_file = "/deployment/sitemap_controller/sitemap.xml"
+        else:
+            out_file = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)), "../../", "sitemap.xml"
+            )
+
         http_request_options = {"ssl": self.settings.get("HTTP_REQUEST_SSL_OPTION")}
         logger.debug(self.settings)
 

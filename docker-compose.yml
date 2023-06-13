@@ -11,8 +11,9 @@ services:
             - default
         restart: always
         environment:
-            SITEMAP_CONTROLLER_SETTINGS: /app/sitemap_controller-production.cfg
-        command: sitemap-controller
+            CONTROLLER_ENV: "PRODUCTION"
+            SITEMAP_CONTROLLER_SETTINGS: /usr/src/app/sitemap_controller-production.cfg
+        command: python run-controller.py
         logging:
             options:
                 max-size: "10m"

@@ -1,0 +1,4 @@
+aiohttp>=3.8.4
+aiofile>=3.8.7
+lxml>=4.9.2
+cssselect>=1.2.0
