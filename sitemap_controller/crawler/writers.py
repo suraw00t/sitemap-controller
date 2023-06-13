@@ -1,4 +1,7 @@
 from aiofile import AIOFile, Reader, Writer
+import logging
+
+logger = logging.getLogger(__file__)
 
 
 class TextWriter:
@@ -12,6 +15,8 @@ class TextWriter:
             for url in urls:
                 await writer("{}\n".format(url))
             await aiodf.fsync()
+
+        logger.info(f"Writen at {self.filename}")
 
 
 class XMLWriter:
@@ -34,3 +39,5 @@ class XMLWriter:
 
             await writer("</urlset>")
             await aiodf.fsync()
+
+        logger.info(f"Writen at {self.filename}")
