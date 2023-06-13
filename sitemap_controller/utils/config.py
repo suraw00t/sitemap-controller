@@ -3,10 +3,14 @@ import sys
 import typing as t
 import types
 
+settings = None
+
 
 class Config(dict):
+    global settings
+
     def __init__(self):
-        self.settings = None
+        self.settings = settings
 
     def has_option(self, option: str) -> bool:
         if option in self.keys():
@@ -14,18 +18,9 @@ class Config(dict):
         return False
 
     def get_settings(self) -> t.Any:
-        if not self.settings:
-            filename = os.environ.get("SITEMAP_CONTROLLER_SETTINGS", None)
-            if filename is None:
-                raise AttributeError(
-                    "This programe require SITEMAP_CONTROLLER_SETTINGS environment"
-                )
-
+        if not settings:
             self.from_object("sitemap_controller.default_settings")
-            self.from_envvar(
-                "SITEMAP_CONTROLLER_SETTINGS",
-                silent=True,
-            )
+            self.from_envvar("SITEMAP_CONTROLLER_SETTINGS", silent=True)
 
         return self
 
@@ -39,6 +34,7 @@ class Config(dict):
         rv = os.environ.get(variable_name)
         if not rv:
             if silent:
+                print(f"The environment variable {variable_name!r} is not set")
                 return False
             raise RuntimeError(
                 f"The environment variable {variable_name!r} is not set"
