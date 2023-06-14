@@ -66,6 +66,7 @@ class Config(dict):
         for key in dir(obj):
             if key.isupper():
                 self[key] = getattr(obj, key)
+                setattr(self, key, self[key])
 
     def import_string(self, import_name: str) -> t.Any:
         import_name = import_name.replace(":", ".")

@@ -12,8 +12,8 @@ class SitemapController:
         self.settings = settings
 
     async def generate_sitemap(self):
-        exclude_urls = self.settings.get("EXCLUDE_URLS")
-        root_url = self.settings.get("URL")
+        exclude_urls = self.settings.EXCLUDE_URLS
+        root_url = self.settings.URL
         if os.environ.get("CONTROLLER_ENV") == "PRODUCTION":
             if not os.path.exists("/deployment/sitemap_controller"):
                 os.makedirs("/deployment/sitemap_controller")
@@ -23,7 +23,7 @@ class SitemapController:
                 os.path.dirname(os.path.abspath(__file__)), "../../", "sitemap.xml"
             )
 
-        http_request_options = {"ssl": self.settings.get("HTTP_REQUEST_SSL_OPTION")}
+        http_request_options = {"ssl": self.settings.HTTP_REQUEST_SSL_OPTION}
         logger.debug(self.settings)
 
         crawler = Crawler(
