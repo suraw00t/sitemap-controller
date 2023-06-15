@@ -17,13 +17,6 @@ class Config(dict):
             return True
         return False
 
-    def get_settings(self) -> t.Any:
-        if not settings:
-            self.from_object("sitemap_controller.default_settings")
-            self.from_envvar("SITEMAP_CONTROLLER_SETTINGS", silent=True)
-
-        return self
-
     def get(self, option: str, default: str = "") -> t.Any:
         if self.has_option(option):
             return self[option]

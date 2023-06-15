@@ -2,10 +2,9 @@ from .server import ControllerServer
 
 
 def create_server():
-    from sitemap_controller.utils import Config
+    from sitemap_controller.utils import get_settings
 
-    config = Config()
-    settings = config.get_settings()
+    settings = get_settings()
     server = ControllerServer(settings)
 
     return server
