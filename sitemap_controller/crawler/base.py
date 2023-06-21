@@ -106,6 +106,7 @@ class Crawler:
         # remove url from basic queue and add it into busy list
         self.todo_queue.remove(url)
         self.busy.add(url)
+        meta_tags = []
 
         try:
             resp = await self.session.get(
@@ -121,10 +122,16 @@ class Crawler:
                 data = (await resp.read()).decode("utf-8", "replace")
                 urls = self.parser.parse(data)
                 asyncio.Task(self.addurls([(u, url) for u in urls]))
+                meta_tags = self.meta_parse(data)
 
             # even if we have no exception, we can mark url as good
             resp.close()
-            self.done[url] = True
+            # self.done[url] = True
+
+            if not any("robots" in meta_tag for meta_tag in meta_tags):
+                self.done[url] = True
+            else:
+                self.done[url] = False
 
         self.busy.remove(url)
         # logger.info(
@@ -134,3 +141,8 @@ class Crawler:
 
     def set_exclude_url(self, urls_list):
         self.exclude_urls = urls_list
+
+    def meta_parse(self, html_str) -> list:
+        import re
+
+        return re.findall(r"(<meta[^>]*>)", html_str)
