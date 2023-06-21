@@ -95,6 +95,8 @@ class Crawler:
                 # Add task into tasks
                 self.tasks.add(task)
 
+            await asyncio.sleep(0.1)
+
     async def process(self, url):
         """
         Process single url
@@ -121,16 +123,14 @@ class Crawler:
             if resp.status == 200 and ("text/html" in resp.headers.get("content-type")):
                 data = (await resp.read()).decode("utf-8", "replace")
                 urls = self.parser.parse(data)
-                asyncio.Task(self.addurls([(u, url) for u in urls]))
                 meta_tags = self.meta_parse(data)
+                asyncio.Task(self.addurls([(u, url) for u in urls]))
 
             # even if we have no exception, we can mark url as good
             resp.close()
-            # self.done[url] = True
+            self.done[url] = True
 
-            if not any("robots" in meta_tag for meta_tag in meta_tags):
-                self.done[url] = True
-            else:
+            if any("robots" in meta_tag for meta_tag in meta_tags):
                 self.done[url] = False
 
         self.busy.remove(url)
