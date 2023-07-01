@@ -32,7 +32,7 @@ def datetime_schedule(schedule=None):
     dow = int(dow) if dow != "*" else None
     year = today.year
 
-    time_today = today.time().replace(second=0, microsecond=0)
+    time_today = today.time()
     time = datetime.time(hours, minutes, 0, 0)
     date = datetime.date(today.year, month if month != today.month else month, day)
     current_datetime = datetime.datetime.combine(date, time)
