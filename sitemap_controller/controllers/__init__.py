@@ -1,4 +1,7 @@
 from .server import ControllerServer
+from .sitemap_generator import SitemapGenerator
+
+__all__ = ["ControllerServer", "SitemapGenerator"]
 
 
 def create_server():
