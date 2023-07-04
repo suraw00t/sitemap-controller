@@ -17,7 +17,7 @@ class Config(dict):
             return True
         return False
 
-    def get(self, option: str, default: str = "") -> t.Any:
+    def get(self, option: str, default: t.Any = None) -> t.Any:
         if self.has_option(option):
             return self[option]
         else:
