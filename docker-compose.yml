@@ -1,6 +1,6 @@
 version: '3'
 services:
-  controller:
+    controller:
         build: .
         image: sitemap_controller-image
         container_name: sitemap-controller
@@ -13,7 +13,8 @@ services:
         environment:
             CONTROLLER_ENV: "PRODUCTION"
             SITEMAP_CONTROLLER_SETTINGS: /usr/src/app/sitemap_controller-production.cfg
-        command: python run-controller.py
+        command: sitemap-controller
+        # command: python run-controller.py
         logging:
             options:
                 max-size: "10m"
