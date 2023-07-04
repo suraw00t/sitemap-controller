@@ -1,10 +1,4 @@
 BASE_URL = "https://www.legardy.com/"
-
-DATABASE_CLIENT = "postgresql"
-DATABASE_HOST = "postgresdb"
-DATABASE_PORT = 5432
-DATABASE_NAME = "legardy-strapi-db"
-DATABASE_USERNAME = "admin"
-DATABASE_PASSWORD = "adminpw"
+API_BASE_URL = "https://backend.legardy.com/api"
 
 SCHEDULE_TO_CHECK_SITEMAP = "0 0 1 * *"
