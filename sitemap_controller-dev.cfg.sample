@@ -3,4 +3,11 @@
 # "0 0 1 6 *" means run at time 0:00, date 1st, June of every year
 # "8 30 * * 0" means run at time 8:30, every Monday
 SCHEDULE_TO_CHECK_SITEMAP = "0 0 1 * *"
-URL = "https://swapi.dev/"
+BASE_URL = "https://www.legardy.com/"
+
+DATABASE_CLIENT="postgresql"
+DATABASE_HOST="postgresdb"
+DATABASE_PORT=5432
+DATABASE_NAME="legardy-strapi-db"
+DATABASE_USERNAME="admin"
+DATABASE_PASSWORD="adminpw"
