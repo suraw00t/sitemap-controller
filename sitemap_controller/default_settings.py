@@ -1,4 +1,4 @@
-BASE_URL = "https://www.legardy.com/"
-API_BASE_URL = "https://backend.legardy.com/api"
+BASE_URL = "http://localhost:8080/"
+API_BASE_URL = "http://localhost:8080/api"
 
 SCHEDULE_TO_CHECK_SITEMAP = "0 0 1 * *"
