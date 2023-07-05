@@ -1,4 +1,4 @@
 from .config import Config
-from .settings import Setting
+from . import settings
 
 __all__ = ["Config"]

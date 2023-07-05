@@ -27,7 +27,6 @@ class Config(dict):
         rv = os.environ.get(variable_name)
         if not rv:
             if silent:
-                print(f"The environment variable {variable_name!r} is not set")
                 return False
             raise RuntimeError(
                 f"The environment variable {variable_name!r} is not set"
