@@ -1,9 +1,8 @@
-import signal
+from .sitemap_generator import SitemapGenerator
 import asyncio
 import logging
 import datetime
-from .sitemap_controller import SitemapController
-from sitemap_controller.crawler import Crawler
+
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +40,8 @@ def datetime_schedule(schedule=None):
         day = 1
 
     if time < time_today and months == "*" and dom == "*":
-        day = day + 1
+        day = (date + datetime.timedelta(days=1)).day
+        month = (date + datetime.timedelta(days=1)).month
 
     if current_datetime < today and dom != "*" and months == "*":
         month = month + 1
@@ -53,8 +53,10 @@ def datetime_schedule(schedule=None):
         day_of_week = find_next_date_from_weekday(dow)
         if day_of_week.day == today.day and time < time_today:
             day = day_of_week.day + 7
+            month = day_of_week.month
         else:
             day = day_of_week.day
+            month = day_of_week.month
 
     date_time = datetime.datetime(year, month, day, hours, minutes, 0, 0)
     schedule = abs(datetime.datetime.today() - date_time)
@@ -67,18 +69,18 @@ class ControllerServer:
         self.settings = settings
         self.running = False
 
-        self.sitemap = SitemapController(self.settings)
+        self.sitemap_generator = SitemapGenerator(self.settings)
 
     async def controller_schedule(self):
         logger.debug("start controller schedule")
         time_check_schedule = self.settings.get("SCHEDULE_TO_CHECK_SITEMAP")
-        await self.sitemap.generate_sitemap()
+        await self.sitemap_generator.generate_sitemap()
 
         while self.running:
             logger.debug("running sitemap controller")
             schedule = datetime_schedule(time_check_schedule)
             await asyncio.sleep(schedule.total_seconds())
-            await self.sitemap.generate_sitemap()
+            await self.sitemap_generator.generate_sitemap()
 
             await asyncio.sleep(10)
 
