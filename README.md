@@ -1,5 +1,4 @@
-# Sitemap Generator [Python]
-* Most of crawler source code is from **[Github](https://github.com/Haikson/sitemap-generator)**.
+# Sitemap Controller [Python, Docker]
 
 ## How to run this
 - `git pull https://github.com/suraw00t/sitemap-controller`
