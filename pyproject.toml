@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "sitemap-controller"
+version = "0.1.0"
+description = ""
+authors = ["suraw00t <surawut.kong@gmail.com>"]
+readme = "README.md"
+packages = [{include = "sitemap_controller"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.8.4"
+aiofile = "^3.8.7"
+lxml = "^4.9.2"
+cssselect = "^1.2.0"
+
+[tool.poetry.scripts]
+sitemap-controller = "sitemap_controller.cmd.controller:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

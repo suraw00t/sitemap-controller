@@ -1,0 +1,24 @@
+version: '3'
+services:
+    controller:
+        build: .
+        image: sitemap_controller-image
+        container_name: sitemap-controller
+        volumes:
+            - ../deployment:/deployment
+            - /etc/localtime:/etc/localtime:ro
+        networks:
+            - default
+        restart: always
+        environment:
+            CONTROLLER_ENV: "PRODUCTION"
+            SITEMAP_CONTROLLER_SETTINGS: /usr/src/app/sitemap_controller-production.cfg
+        command: sitemap-controller
+        # command: python run-controller.py
+        logging:
+            options:
+                max-size: "10m"
+                max-file: "3"
+
+networks:
+    default:

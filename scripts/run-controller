@@ -1,0 +1,3 @@
+#!/bin/sh
+
+SITEMAP_CONTROLLER_SETTINGS=$(pwd)/sitemap_controller-dev.cfg sitemap-controller
