@@ -19,22 +19,23 @@ class SitemapGenerator:
 
     async def generate_sitemap(self):
         exclude_paths = self.settings.EXCLUDE_PATHS
-        if os.environ.get("CONTROLLER_ENV") == "PRODUCTION":
-            if not os.path.exists("/deployment/sitemap_controller"):
-                os.makedirs("/deployment/sitemap_controller")
-            out_file = "/deployment/sitemap_controller/sitemap.xml"
+        if "prod" in os.environ.get("CONTROLLER_ENV", ""):
+            out_file = "/deployment/sitemap.xml"
         else:
             out_file = os.path.join(
                 os.path.dirname(os.path.abspath(__file__)), "../../", "sitemap.xml"
             )
 
-        await self.get_url_paths()
+        await self.generate_url_paths()
         xml_writer = XMLWriter(out_file, self.settings)
         await xml_writer.write(
             [path for path in self.all_paths if path and path not in exclude_paths]
         )
 
-    async def get_url_paths(self):
+    async def generate_url_paths(self):
+        if append_paths := self.settings.get("APPEND_PATHS"):
+            for path in append_paths:
+                self.all_paths.append(path if path.startswith("/") else "/" + path)
         try:
             article_paths = await self.article.get_article_paths_by_type()
             self.all_paths.extend(article_paths)

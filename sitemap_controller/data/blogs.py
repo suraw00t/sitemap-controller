@@ -18,7 +18,7 @@ class Blog:
         params = {
             "pagination[page]": 1,
             "pagination[pageSize]": page_size,
-            "fields[0]": "id",
+            "fields[0]": "slug",
             "fields[1]": "publishedAt",
         }
         try:
@@ -39,6 +39,6 @@ class Blog:
         root_path = "blogs"
         for data in blogs["data"]:
             if data["attributes"]["publishedAt"] != None:
-                paths.append("{}/{}".format(root_path, data["id"]))
+                paths.append("{}/{}".format(root_path, data["attributes"]["slug"]))
 
         return paths
